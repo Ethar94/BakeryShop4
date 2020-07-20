@@ -115,6 +115,9 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            validators={['required', 'isEmail']}
+            errorMessages={['this field is required', 'email is not valid']}
+
           />
           <TextField
             value={values.password}
@@ -128,6 +131,8 @@ export default function SignIn() {
             id="password"
             type="password"
             autoComplete="current-password"
+            validators={['required']}
+            errorMessages={['this field is required']}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

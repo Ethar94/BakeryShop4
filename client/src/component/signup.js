@@ -139,6 +139,8 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                validators={['required', 'isEmail']}
+                errorMessages={['this field is required', 'email is not valid']}
               />
             </Grid>
             <Grid item xs={12}>
@@ -153,6 +155,8 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                validators={['required']}
+                errorMessages={['this field is required']}
               />
             </Grid>
             <Grid item xs={12}>
