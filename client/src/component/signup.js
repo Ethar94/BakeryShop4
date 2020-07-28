@@ -13,7 +13,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -26,7 +25,6 @@ function Copyright() {
     </Typography>
   );
 }
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -36,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    background:"rgba(0, 0, 0, 0.94)",
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -44,57 +42,58 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    background:"rgba(0, 0, 0, 0.79)",
+    color:"white"
   },
 }));
-
 export default function SignUp() {
   const classes = useStyles();
-
   const [values, setValues] = React.useState({
     firstName: "",
     lastName: "",
-    Email: "",
+    email: "",
     password: "",
   });
-
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-
   const onSubmit = (e) => {
     e.preventDefault();
     var firstName = document.getElementById("firstName").value;
     var lastName = document.getElementById("lastName").value;
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
-
+    console.log(password)
+     console.log(lastName)
+      console.log(firstName)
+       console.log(email)
     const user = {
       firstName: firstName,
       lastName: lastName,
       email: email,
       password: password,
     };
+    console.log(user)
     axios
-      .post("http://localhost:3000/signup", user)
-      .then((res) => {
-        document.getElementById("accoutCreated").innerText =
-          "Account created Successfully! ";
-        // window.location = '/login'
-      })
-      .catch(
-        () =>
-          (document.getElementById("accoutCreated").innerText =
-            "The email is already exists! ")
-      );
 
-    //window.location = "/login"
+       .post("http://localhost:7000/signup", user)
+ .then((res) => {
+    console.log(res.data);
+    if(res.data === "User authenticated"){
+        alert('User authenticated')
+      }
+  }).catch((error) => {
+    alert ("try again ")
+      console.log(error)
+  });
+
   };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          {/* <LockOutlinedIcon /> */}
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
@@ -130,14 +129,16 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                value={values.Email}
-                onChange={handleChange("Email")}
+                value={values.email}
+                onChange={handleChange("email")}
+                variant="outlined"
+                name="email" 
+                label="email"
+                type="email"
                 variant="outlined"
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
-                name="email"
                 autoComplete="email"
               />
             </Grid>
@@ -145,7 +146,6 @@ export default function SignUp() {
               <TextField
                 value={values.password}
                 onChange={handleChange("password")}
-                variant="outlined"
                 required
                 fullWidth
                 name="password"
@@ -157,17 +157,16 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                control={<Checkbox value="allowExtraEmails"  />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
               />
             </Grid>
           </Grid>
-
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            color="primary" 
             className={classes.submit}
           >
             Sign Up
